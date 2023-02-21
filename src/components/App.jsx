@@ -1,16 +1,13 @@
+import { FeedbackBtn } from './FeedbackBtn/FeedbackBtn';
+import { Statistics } from './Statistics/Statistics';
+import { GlobalStyle } from './GlobalStyle';
+
 export const App = () => {
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
+    <section class="FeedbackForm">
+      <GlobalStyle />
+      <FeedbackBtn />
+      <Statistics />
+    </section>
   );
 };
