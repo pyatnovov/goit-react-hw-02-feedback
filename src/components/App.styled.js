@@ -5,7 +5,8 @@ export const List = styled.ul`
   display: flex;
   gap: 10px;
 `;
-export const FeedbackBtnForm = styled.div`
+
+export const FeedbackBtnForm = styled.section`
   display: flex;
   flex-direction: column;
 `;
