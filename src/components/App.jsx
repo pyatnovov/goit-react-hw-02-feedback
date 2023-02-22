@@ -1,14 +1,21 @@
 import { GlobalStyle } from './GlobalStyle';
-import { FeedbackBtnForm, List } from './App.styled';
 import { Component } from 'react';
-
+import { Statistics } from './Statistics/Statistics';
+import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
+import { Section } from './Section/Section';
+import { Notification } from './Notification/Notification';
 export class App extends Component {
   state = {
     good: 0,
     neutral: 0,
     bad: 0,
   };
-
+  onGoodClick = () => {
+    this.setState(prevState => {
+      const operation = prevState.good + 1;
+      return operation;
+    });
+  };
   countTotalFeedback = state => {
     const result = state.good + state.neutral + state.bad;
     return result;
@@ -23,36 +30,39 @@ export class App extends Component {
     return Math.round(percentage);
   };
 
+  addFeedback = option => {
+    this.setState(state => ({
+      [option]: state[option] + 1,
+    }));
+  };
+
   render() {
     <GlobalStyle />;
+    const total = this.countTotalFeedback(this.state);
     return (
-      <FeedbackBtnForm className="FeedbackForm">
-        <h1 className="title">Please leave feedback</h1>
-        <List>
-          <li className="btnListItem">
-            <button className="Btn">Good</button>
-          </li>
-
-          <li className="btnListItem">
-            <button className="Btn">Normal</button>
-          </li>
-
-          <li className="btnListItem">
-            <button className="Btn">Bad</button>
-          </li>
-        </List>
-        <h2 className="title">Statistics</h2>
-        <List className="List">
-          <li className="Item">Good:{this.state.good}</li>
-          <li className="Item">Neutral:{this.state.neutral}</li>
-          <li className="Item">Bad:{this.state.bad}</li>
-          <li className="Item">Total:{this.countTotalFeedback(this.state)}</li>
-          <li className="Item">
-            Positive feedback:{this.countPositiveFeedbackPercentage(this.state)}
-            %
-          </li>
-        </List>
-      </FeedbackBtnForm>
+      <>
+        <Section title={'Please leave feedback'}>
+          <FeedbackOptions
+            options={Object.keys(this.state)}
+            onLeaveFeedback={this.addFeedback}
+          />
+        </Section>
+        {total === 0 ? (
+          <Notification message={'There is no feedback'} />
+        ) : (
+          <Section title={'Statistics'}>
+            <Statistics
+              good={this.state.good}
+              neutral={this.state.neutral}
+              bad={this.state.bad}
+              total={total}
+              positivePercentage={this.countPositiveFeedbackPercentage(
+                this.state
+              )}
+            />
+          </Section>
+        )}
+      </>
     );
   }
 }
