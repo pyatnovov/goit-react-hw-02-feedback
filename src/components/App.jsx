@@ -10,12 +10,7 @@ export class App extends Component {
     neutral: 0,
     bad: 0,
   };
-  onGoodClick = () => {
-    this.setState(prevState => {
-      const operation = prevState.good + 1;
-      return operation;
-    });
-  };
+
   countTotalFeedback = state => {
     const result = state.good + state.neutral + state.bad;
     return result;
@@ -41,16 +36,16 @@ export class App extends Component {
     const total = this.countTotalFeedback(this.state);
     return (
       <>
-        <Section title={'Please leave feedback'}>
+        <Section title="Please leave feedback">
           <FeedbackOptions
             options={Object.keys(this.state)}
             onLeaveFeedback={this.addFeedback}
           />
         </Section>
         {total === 0 ? (
-          <Notification message={'There is no feedback'} />
+          <Notification message="There is no feedback" />
         ) : (
-          <Section title={'Statistics'}>
+          <Section title="Statistics">
             <Statistics
               good={this.state.good}
               neutral={this.state.neutral}
